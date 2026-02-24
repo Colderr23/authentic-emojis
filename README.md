@@ -2,9 +2,11 @@
 
 Captures authentic face expressions and posts them as emojis to LinkedIn post comments.
 
+> **Note:** This extension is currently in beta.
+
 ## Features
 - Detects your facial expressions locally in your browser using your webcam.
-- Maps your authentic expressions to specific emojis (😃, 🙂, 🤔, 😕, 😳, 🤨, 😎, etc.).
+- Maps your authentic expressions to specific supported emojis: 😐, 😃, 😳, 😏, 🤨, 🤔, 😎.
 - Automatically injects the corresponding emoji into the active LinkedIn post's comment box.
 
 ## Installation Tutorial
