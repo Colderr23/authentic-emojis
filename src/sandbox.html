@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>LinkedIn Face Tracker Sandbox</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            padding-bottom: 48px;
+            height: 100%;
+        }
+
+        body {
+            overflow: hidden;
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 16px;
+            width: 100%;
+            box-sizing: border-box;
+            background-color: transparent;
+            /* Allow iframe to be transparent */
+        }
+
+        #video-wrapper {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        #video-container {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            background-color: black;
+            position: relative;
+            z-index: 1;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: scaleX(-1);
+        }
+
+        #floating-emoji {
+            pointer-events: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.5);
+            font-size: 92px;
+            line-height: 1;
+            /* Prevent baseline extra space */
+            margin-top: 6px;
+            /* Slight visual tweak down to counter emoji internal padding */
+            opacity: 0;
+            z-index: 2;
+        }
+
+        @keyframes smoothFadePop {
+            0% {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+
+            20% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 0.8;
+            }
+
+            70% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(2);
+                opacity: 0;
+            }
+        }
+
+        .animate-pop {
+            animation: smoothFadePop 1.5s ease-in-out forwards;
+        }
+
+        #status-container {
+            padding: 12px 16px;
+            font-size: 13px;
+            background-color: rgba(20, 20, 20, 0.95);
+            border: 2px solid #333;
+            border-radius: 12px;
+            width: calc(100% - 32px);
+            box-sizing: border-box;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+        }
+
+        #status-container {
+            padding: 8px 12px;
+            font-size: 13px;
+        }
+
+        .status-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+
+        .status-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .status-label {
+            font-weight: 600;
+            color: #ddd;
+        }
+
+        .status-value {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .indicator-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #555;
+            display: inline-block;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .status-on .indicator-dot {
+            background-color: #2ecc71;
+            box-shadow: 0 0 6px #2ecc71;
+        }
+
+        .status-off .indicator-dot {
+            background-color: #e74c3c;
+            box-shadow: 0 0 6px #e74c3c;
+        }
+
+        #expression-text {
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="video-wrapper">
+        <div id="video-container">
+            <video id="webcam" autoplay playsinline muted></video>
+        </div>
+        <div id="floating-emoji"></div>
+    </div>
+    <div id="status-container">
+        <div class="status-row">
+            <span class="status-label">Camera</span>
+            <div class="status-value status-off" id="camera-status">
+                <span class="indicator-dot"></span>
+            </div>
+        </div>
+        <div class="status-row">
+            <span class="status-label">Face Tracking</span>
+            <div class="status-value status-off" id="tracking-status">
+                <span class="indicator-dot"></span>
+            </div>
+        </div>
+        <div class="status-row">
+            <span class="status-label">Hand Tracking</span>
+            <div class="status-value status-off" id="hand-status">
+                <span class="indicator-dot"></span>
+            </div>
+        </div>
+        <div class="status-row">
+            <span class="status-label">Object Tracking</span>
+            <div class="status-value status-off" id="object-status">
+                <span class="indicator-dot"></span>
+            </div>
+        </div>
+        <div class="status-row">
+            <span class="status-label">Expression</span>
+            <span id="expression-text">Waiting...</span>
+        </div>
+        <div class="status-row" style="margin-top: 8px; border-top: 1px solid #444; padding-top: 8px;">
+            <label for="test-mode" class="status-label"
+                style="cursor: pointer; display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                Test Mode (No Inject)
+                <input type="checkbox" id="test-mode" checked style="cursor: pointer;">
+            </label>
+        </div>
+    </div>
+    <script src="sandbox.js"></script>
+</body>
+
+</html>

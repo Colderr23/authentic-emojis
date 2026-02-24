@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Offscreen Document for MediaPipe</title>
+    <style>
+        body {
+            position: relative;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 
+      We need a video element here to stream the camera and run inference.
+      Even though it's offscreen, the DOM APIs work.
+    -->
+    <video id="webcam" autoplay playsinline muted></video>
+    <script src="offscreen.js"></script>
+</body>
+
+</html>
