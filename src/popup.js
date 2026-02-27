@@ -1,9 +1,9 @@
-const ENABLE_DEV_UI = true; // Set to false to hide the toggle in public release
+const ENABLE_DEV_UI = false; // Set to false to hide the toggle in public release
 
 document.addEventListener('DOMContentLoaded', () => {
     const toggleContainer = document.getElementById('dev-panel-toggle-container');
     if (!toggleContainer) return;
-    
+
     const toggleCheckbox = document.getElementById('dev-panel-toggle');
 
     if (ENABLE_DEV_UI) {
